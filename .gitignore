@@ -1,0 +1,56 @@
+# --------------- Java 相关 ---------------
+*.class
+*.jar
+*.war
+*.ear
+*.log
+*.iml
+*.hprof
+
+# --------------- Maven/Gradle ---------------
+/target/
+/build/
+
+# 如果使用 Maven Wrapper
+.mvn/
+!/.mvn/wrapper/maven-wrapper.jar
+mvnw
+mvnw.cmd
+
+# 如果使用 Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+gradlew
+gradlew.bat
+
+# --------------- IDEA 项目相关 ---------------
+.idea/
+*.iws
+*.ipr
+*.iml
+
+# --------------- 操作系统 生成的临时文件 ---------------
+.DS_Store
+Thumbs.db
+
+# --------------- 日志 & 临时文件 ---------------
+logs/
+*.log
+*.tmp
+out/
+
+# --------------- 数据库文件 ---------------
+*.db
+*.sql
+*.sqlite
+
+# --------------- 本地环境配置 ---------------
+*.env
+*.properties.local
+application-local.properties
+application-dev.properties
+
+# --------------- web 资源临时文件（前端构建工具可能产生）---------------
+node_modules/
+dist/
