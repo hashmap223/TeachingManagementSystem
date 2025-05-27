@@ -26,11 +26,11 @@
 
     <!--配置SqlSessionFactory-->
     <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <!--加载mybatis配置文件-->
         <property name="configLocation" value="classpath:mybatis/mybatis.cfg.xml"/>
-        <!--数据源-->
         <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations" value="classpath:mybatis/mapper/**/*.xml"/>
     </bean>
+
 
     <!--Mapper批量扫描，从Mapper包扫描接口，自动创建代理对象，并在Spring容器中自动注册
     使用 Mybatis与Spring整合包的这个 Mapper 扫描器后， Mybatis 配置文件里的扫描器，就可以取消掉了
