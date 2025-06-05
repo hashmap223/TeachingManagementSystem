@@ -263,7 +263,6 @@ public class AdminController {
     // 课程信息显示
     @RequestMapping("/showCourse")
     public String showCourse(Model model, Integer page) throws Exception {
-        
         List<CourseCustom> list = null;
         // 页码对象
         PagingVO pagingVO = new PagingVO();

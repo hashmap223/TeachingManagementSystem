@@ -8,6 +8,7 @@ import com.ssmproject.service.StudentService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,14 +29,17 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     private CollegeMapper collegeMapper;
     
+    @Transactional
     public void updataById(Integer id, StudentCustom studentCustom) throws Exception {
         studentMapper.updateByPrimaryKey(studentCustom);
     }
     
+    @Transactional
     public void removeById(Integer id) throws Exception {
         studentMapper.deleteByPrimaryKey(id);
     }
     
+    @Transactional(readOnly = true)
     public List<StudentCustom> findByPaging(Integer toPageNo) throws Exception {
         PagingVO pagingVO = new PagingVO();
         pagingVO.setToPageNo(toPageNo);
@@ -45,6 +49,7 @@ public class StudentServiceImpl implements StudentService {
         return list;
     }
     
+    @Transactional
     public Boolean save(StudentCustom studentCustoms) throws Exception {
         Student stu = studentMapper.selectByPrimaryKey(studentCustoms.getUserid());
         if (stu == null) {

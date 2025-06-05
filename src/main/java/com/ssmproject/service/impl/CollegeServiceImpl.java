@@ -6,26 +6,25 @@ import com.ssmproject.po.CollegeExample;
 import com.ssmproject.service.CollegeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 /**
- * @author  HashMap
- *
+ * @author HashMap
  */
 @Service
 public class CollegeServiceImpl implements CollegeService {
-
+    
     @Autowired
     private CollegeMapper collegeMapper;
-
+    
+    @Transactional(readOnly = true)
     public List<College> finAll() throws Exception {
         CollegeExample collegeExample = new CollegeExample();
         CollegeExample.Criteria criteria = collegeExample.createCriteria();
-
+        
         criteria.andCollegeidIsNotNull();
-
-
         return collegeMapper.selectByExample(collegeExample);
     }
 }

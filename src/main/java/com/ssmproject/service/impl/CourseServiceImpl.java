@@ -9,6 +9,7 @@ import com.ssmproject.service.CourseService;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,10 +32,12 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     private SelectedcourseMapper selectedcourseMapper;
     
+    @Transactional
     public void updateById(Integer id, CourseCustom courseCustom) throws Exception {
         courseMapper.updateByPrimaryKey(courseCustom);
     }
     
+    @Transactional
     public Boolean removeById(Integer id) throws Exception {
         // 自定义查询条件
         SelectedcourseExample example = new SelectedcourseExample();
@@ -49,7 +52,7 @@ public class CourseServiceImpl implements CourseService {
         
         return false;
     }
-    
+    @Transactional(readOnly = true)
     public List<CourseCustom> findByPaging(Integer toPageNo) throws Exception {
         PagingVO pagingVO = new PagingVO();
         pagingVO.setToPageNo(toPageNo);
@@ -57,7 +60,7 @@ public class CourseServiceImpl implements CourseService {
         List<CourseCustom> list = courseMapperCustom.findByPaging(pagingVO);
         return list;
     }
-    
+    @Transactional
     public Boolean save(CourseCustom couseCustom) throws Exception {
         Course course = courseMapper.selectByPrimaryKey(couseCustom.getCourseid());
         if (course == null) {
@@ -76,7 +79,7 @@ public class CourseServiceImpl implements CourseService {
         
         return courseMapper.countByExample(courseExample);
     }
-    
+    @Transactional(readOnly = true)
     public CourseCustom findById(Integer id) throws Exception {
         Course course = courseMapper.selectByPrimaryKey(id);
         CourseCustom courseCustom = null;
@@ -87,7 +90,7 @@ public class CourseServiceImpl implements CourseService {
         
         return courseCustom;
     }
-    
+    @Transactional(readOnly = true)
     public List<CourseCustom> findByName(String name) throws Exception {
         CourseExample courseExample = new CourseExample();
         // 自定义查询条件
@@ -115,7 +118,7 @@ public class CourseServiceImpl implements CourseService {
         
         return courseCustomList;
     }
-    
+    @Transactional(readOnly = true)
     public List<CourseCustom> findByTeacherID(Integer id) throws Exception {
         CourseExample courseExample = new CourseExample();
         // 自定义查询条件
