@@ -1,7 +1,7 @@
 package com.ssmproject.exception;
 /**
  * 系统自定义异常类，针对预期异常，需要在程序中抛出此类的异常
- * @author 
+ * @author HashMap
  *
  */
 public class CustomException extends Exception {

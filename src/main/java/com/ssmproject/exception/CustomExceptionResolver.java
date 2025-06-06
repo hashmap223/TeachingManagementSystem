@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  *      成为默认全局异常处理类
  *
  *   全局异常处理器只有一个，配置多个也没用。
- * @author 
+ * @author HashMap
  *
  */
 public class CustomExceptionResolver implements HandlerExceptionResolver {
