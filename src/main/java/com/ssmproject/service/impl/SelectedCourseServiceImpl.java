@@ -54,7 +54,45 @@ public class SelectedCourseServiceImpl implements SelectedCourseService {
         
         return secList;
     }
-    
+
+
+@Override
+public List<SelectedCourseCustom> findByCourseIdUsername(Integer id, String userid, String username) throws Exception {
+    SelectedcourseExample example = new SelectedcourseExample();
+    SelectedcourseExample.Criteria criteria = example.createCriteria();
+    criteria.andCourseidEqualTo(id);
+
+
+    List<Selectedcourse> list = selectedcourseMapper.selectByExample(example);
+    List<SelectedCourseCustom> secList = new ArrayList<>();
+
+    for (Selectedcourse s : list) {
+        SelectedCourseCustom sec = new SelectedCourseCustom();
+        BeanUtils.copyProperties(s, sec);
+
+        // 判断是否完成该课程
+        if (sec.getMark() != null) {
+            sec.setOver(true);
+        }
+
+        Student student = studentMapper.selectByPrimaryKey(sec.getStudentid());
+
+        // 如果提供了 userid 或 username，则进行二次过滤
+        boolean matchUserid = userid == null || userid.isEmpty() || student.getUserid().toString().contains(userid);
+        boolean matchUsername = username == null || username.isEmpty() || student.getUsername().contains(username);
+
+        if (matchUserid && matchUsername) {
+            StudentCustom studentCustom = new StudentCustom();
+            BeanUtils.copyProperties(student, studentCustom);
+            sec.setStudentCustom(studentCustom);
+            secList.add(sec);
+        }
+    }
+
+    return secList;
+}
+
+
     @Transactional(readOnly = true)
     public List<SelectedCourseCustom> findByCourseIDPaging(Integer page, Integer id) throws Exception {
         return null;

@@ -19,19 +19,32 @@
 
 </head>
 <body>
-	<!-- 顶栏 -->
-	<jsp:include page="top.jsp"></jsp:include>
-	<!-- 中间主体 -->
-	<div class="container" id="content">
-		<div class="row">
-			<jsp:include page="menu.jsp"></jsp:include>
-			<div class="col-md-10">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<div class="row">
-							<h1 class="col-md-5">已选该课程学生名单</h1>
-						</div>
+<!-- 顶栏 -->
+<jsp:include page="top.jsp"></jsp:include>
+<!-- 中间主体 -->
+<div class="container" id="content">
+	<div class="row">
+		<jsp:include page="menu.jsp"></jsp:include>
+		<div class="col-md-10">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<div class="row">
+						<h1 class="col-md-5">已选该课程学生名单</h1>
+						<form class="bs-example bs-example-form col-md-5 form-inline" role="form"
+							  style="margin: 20px 0 10px 0;"
+							  action="${pageContext.request.contextPath}/teacher/selectGrade"
+							  id="form1" method="post">
+							<input type="hidden" name="courseid" value="${courseid}" />
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="请输入学生学号" name="userid" style="margin-right: 10px;">
+							</div>
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="请输入学生姓名" name="username" style="margin-right: 10px;">
+							</div>
+							<button type="submit" class="btn btn-primary">搜索</button>
+						</form>
 					</div>
+				</div>
 					<table class="table table-bordered">
 						<thead>
 							<tr>

@@ -62,6 +62,17 @@ public class TeacherController {
         }
         List<SelectedCourseCustom> list = selectedCourseService.findByCourseID(id);
         model.addAttribute("selectedCourseList", list);
+        model.addAttribute("courseid", id);
+        System.out.println(list);
+        return "teacher/showGrade";
+    }
+    // 显示成绩
+    @RequestMapping(value = "/selectGrade",method = {RequestMethod.POST})
+    public String gradeCourse(Integer courseid,String userid, String username, Model model) throws Exception {
+        System.out.println(courseid+userid+username);
+        List<SelectedCourseCustom> list = selectedCourseService.findByCourseIdUsername(courseid,userid,username);
+        model.addAttribute("selectedCourseList", list);
+        model.addAttribute("courseid", courseid);
         return "teacher/showGrade";
     }
 

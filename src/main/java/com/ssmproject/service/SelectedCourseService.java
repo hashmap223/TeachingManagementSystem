@@ -13,6 +13,7 @@ public interface SelectedCourseService {
 
     //根据课程ID查询课程
     List<SelectedCourseCustom> findByCourseID(Integer id) throws Exception;
+    List<SelectedCourseCustom> findByCourseIdUsername(Integer id,String userid,String username) throws Exception;
 
     //根据课程id分页查询课程
     List<SelectedCourseCustom> findByCourseIDPaging(Integer page, Integer id) throws Exception;
