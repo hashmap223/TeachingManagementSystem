@@ -9,12 +9,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- 引入bootstrap -->
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/css/bootstrap.min.css">
-<!-- 引入JQuery  bootstrap.js-->
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+    <!-- 引入JQuery  bootstrap.js-->
 <script src="${pageContext.request.contextPath}/js/jquery-3.2.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-
+<script src="${pageContext.request.contextPath}/js/xlsx.full.min.js"></script>
 <%--<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">--%>
 
 </head>
@@ -43,9 +42,10 @@
 							</div>
 							<button type="submit" class="btn btn-primary">搜索</button>
 						</form>
+						<button onclick="exportTableToExcelCleaned('GradeTable', '课程信息')" class="btn btn-primary">导出 Excel</button>
 					</div>
 				</div>
-					<table class="table table-bordered">
+					<table class="table table-bordered" id="GradeTable">
 						<thead>
 							<tr>
 								<th>学号</th>
@@ -149,5 +149,31 @@
         $("#sub").click(function () {
             $("#form1").submit();
         });
+
+		function exportTableToExcelCleaned(tableId, filename = '课程信息') {
+			const originalTable = document.getElementById(tableId);
+
+			// 克隆原始表格 避免影响页面
+			const clonedTable = originalTable.cloneNode(true);
+
+			// 删除最后一行 {操作行}
+			const rowCount = clonedTable.rows.length;
+			if (rowCount > 0) {
+				clonedTable.deleteRow(rowCount - 1);
+			}
+
+			// 删除每行最后两列 {状态信息列}
+			for (let row of clonedTable.rows) {
+				const cellCount = row.cells.length;
+				if (cellCount >= 2) {
+					row.deleteCell(cellCount - 1); // 删除最后一列
+					row.deleteCell(cellCount - 2); // 删除倒数第二列
+				}
+			}
+
+			// 导出
+			const wb = XLSX.utils.table_to_book(clonedTable, {sheet: "Sheet1"});
+			XLSX.writeFile(wb, filename + `.xlsx`);
+		}
 	</script>
 </html>
