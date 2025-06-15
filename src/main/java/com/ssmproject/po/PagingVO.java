@@ -18,7 +18,8 @@ public class PagingVO {
     private int nextPageNo;
     //要前往的页码,默认0
     private int toPageNo = 0;
-
+    
+    private String queryArg;
     public void setToPageNo(Integer toPageNo) {
         //新一页
         this.toPageNo = (toPageNo-1) * pageSize ;
@@ -79,5 +80,13 @@ public class PagingVO {
 
     public void setNextPageNo(int nextPageNo) {
         this.nextPageNo = nextPageNo;
+    }
+    
+    public String getQueryArg() {
+        return queryArg;
+    }
+    
+    public void setQueryArg(String queryArg) {
+        this.queryArg = queryArg;
     }
 }

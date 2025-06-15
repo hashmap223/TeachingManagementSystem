@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author HashMap
@@ -44,6 +45,7 @@ public class StudentController {
         model.addAttribute("courseList", list);
         return "student/showCourse";
     }
+    
     
     @RequestMapping(value = "/showCourse")
     public String stuCourseShow(Model model, Integer page) throws Exception {
@@ -119,18 +121,31 @@ public class StudentController {
     }
     
     // 已修课程
-    @RequestMapping(value = "/overCourse")
-    public String overCourse(Model model) throws Exception {
-        
+    // 根据课程名称查询成绩
+    @RequestMapping(value = "/overCourse", method = {RequestMethod.POST, RequestMethod.GET})
+    private String overCourse(String findByName, Model model) throws Exception {
         // 获取当前用户名
         Subject subject = SecurityUtils.getSubject();
         StudentCustom studentCustom = studentService.findStudentAndSelectCourseListByName((String) subject.getPrincipal());
         
         List<SelectedCourseCustom> list = studentCustom.getSelectedCourseList();
+        // 转换为流根据条件过滤
+        if (findByName != null && !findByName.trim().isEmpty()) {
+            list = list
+                    .stream()
+                    .filter(c -> containsIgnoreCase(c.getCouseCustom().getCoursename(), findByName))
+                    .collect(Collectors.toList());
+        }
         
         model.addAttribute("selectedCourseList", list);
-        
         return "student/overCourse";
+    }
+    // 模糊查询子串
+    public boolean containsIgnoreCase(String source, String target) {
+        if (source == null || target == null) {
+            return false;
+        }
+        return source.toLowerCase().contains(target.toLowerCase());
     }
     
     // 修改密码
@@ -139,5 +154,6 @@ public class StudentController {
         return "student/passwordRest";
     }
     
+
     
 }
